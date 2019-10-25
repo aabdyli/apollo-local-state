@@ -1,5 +1,8 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import React from 'react'
+import Header from './components/Header'
+import Sidebar from './components/Sidebar'
+import NoteViewer from './components/NoteViewer'
+import NoteEditor from './components/NoteEditor';
 
 const items = [
   {
@@ -64,21 +67,20 @@ A component by [Espen Hovlandsdal](https://espen.codes/)`
   }
 ];
 
+let id = 3;
+
 export default function App() {
   const [notes, setNotes] = React.useState(items)
-  const [activeNote, setActiveNote] = React.useState({
-    id: 1,
-    title: "",
-    content: ""
-  })
-  const [editable, setEditable] = React.useState(true)
-
-  function openNote(key = 1) {
-    return setActiveNote(notes.find(note => note.id === key))
-  }
+  const [activeNote, setActiveNote] = React.useState(notes[0])
+  const [editable, setEditable] = React.useState(false)
 
   function cancel() {
-    setActiveNote(notes.find(note => note.id === activeNote.id))
+    const note = notes.find(note => note.id === activeNote.id)
+    if(note) {
+      setActiveNote(note)
+    } else {
+      newNote()
+    }
     return setEditable(!editable)
   }
 
@@ -87,21 +89,32 @@ export default function App() {
       title: e.target.value
     }))
   }
-
+  
   function changeContent(e) {
     return setActiveNote(Object.assign({}, activeNote, {
       content: e.target.value
     }))
   }
 
+  function openNote(key = 1) {
+    setActiveNote(notes.find(note => note.id === key))
+    setEditable(false)
+  }
+  
   function updateNote() {
     let index = notes.findIndex(note => note.id === activeNote.id)
-    console.log(index)
-    setNotes([
-      ...notes.slice(0, index),
-      activeNote,
-      ...notes.slice(index + 1)
-    ])
+    if(index !== -1) {
+      setNotes([
+        ...notes.slice(0, index),
+        activeNote,
+        ...notes.slice(index + 1)
+      ])
+    } else if (index === -1) {
+      setNotes([
+        ...notes,
+        Object.assign({}, activeNote, {id: id++}),
+      ])
+    }
     setEditable(false)
   }
 
@@ -111,61 +124,32 @@ export default function App() {
       ...notes.slice(0, index),
       ...notes.slice(index + 1)
     ])
+    newNote()
+  }
+  function newNote() {
+    setActiveNote({title: '', content: ''})
+    setEditable(true)
   }
 
   return (
     <div className="h-screen">
-      <header className="bg-blue-500">
-        <div className="h-16 mx-auto px-12 flex justify-between items-center text-blue-100">
-          <div><a href="#">App</a></div>
-          <ul className="flex">
-            <li className="ml-6"><a href="#">Settings</a></li>
-            <li className="ml-6"><a href="#">Username</a></li>
-          </ul>
-        </div>
-      </header>
+      <Header />
       <div className="border-2 flex h-max bg-gray-300">
-        <div className="w-1/5 overflow-y-scroll">
-          <div className="h-12 pl-2 flex items-center border-b border-gray-400 hover:bg-gray-400">
-            <a className="flex" href="#">
-              <svg className="fill-current text-blue-600 h-6 w-6 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
-              </svg>
-              <span className="pl-2">Add Note</span>
-            </a>
-          </div>
-          { 
-            notes.map(note => (
-              <a href="#" className="" onClick={() => openNote(note.id)}>
-                <div className="h-auto pl-2 py-4 items-center border-b border-gray-400 hover:bg-gray-400">
-                  <h1 className="text-lg font-semibold pb-1">{note.title}</h1>
-                  <p className="h-6 text-gray-600 overflow-hidden">{note.content}</p>
-                </div>
-              </a>
-            ))
-          }
-        </div>
+        <Sidebar onNewNote={newNote} notes={notes} onOpenNote={openNote}/>
         { !editable
-        ? <div className="w-4/5 pt-4 pl-4 flex flex-col"> 
-            <div className="flex-1 overflow-y-scroll">
-              <h1 className="text-3xl border-b border-teal-500 mb-2 px-4 inline-block">{activeNote.title}</h1>
-              <ReactMarkdown className="markdown" source={activeNote.content.replace('\n', '')} escapeHtml={false}/>
-            </div>
-            <div className="h-16 border-t border-teal-500 -ml-4 bg-gray-100 flex items-center justify-end">
-              <a href="#update" onClick={() => setEditable(!editable)} className="py-2 px-6 mx-2 rounded-lg bg-teal-700 text-teal-200 hover:text-teal-100 hover:bg-teal-800">Update</a>
-              <a href="#delete" onClick={deleteNote} className="py-2 px-6 mx-2 rounded-lg bg-red-700 text-red-200 hover:text-red-100 hover:bg-red-800">Delete</a>
-            </div>
-          </div>
-        : <div className="w-4/5 bg-indigo-100 flex flex-col">
-            <div className="flex-1 ">
-              <input className="w-full h-16 pl-8 pt-4 text-3xl border-b border-teal-500" onChange={changeTitle} type="text" value={activeNote.title} placeholder="Note Title"></input>
-              <textarea className="w-full h-full overflow-y-scroll pl-4 pt-4" onChange={changeContent} defaultValue={activeNote.content}></textarea>
-            </div>
-            <div className="h-16 border-t border-teal-500 -ml-4 bg-gray-100 flex items-center justify-end">
-              <button href="#update" onClick={updateNote} className="py-2 px-6 mx-2 rounded-lg bg-teal-700 text-teal-200 hover:text-teal-100 hover:bg-teal-800">Update</button>
-              <a href="#delete" onClick={cancel} className="py-2 px-6 mx-2 rounded-lg bg-gray-300 hover:text-gray-900 hover:bg-gray-400">Cancel</a>
-            </div>
-          </div> }
+        ? <NoteViewer 
+            note={activeNote}
+            onUpdateClick={() => setEditable(!editable)}
+            onDeleteNote={deleteNote}
+          />
+        : <NoteEditor
+            note={activeNote}
+            onChangeTitle={changeTitle} 
+            onChangeContent={changeContent} 
+            onUpdateNote={updateNote}
+            onCancel={cancel}
+          />
+        }
       </div>
     </div>
   );
