@@ -3,77 +3,49 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import NoteViewer from './components/NoteViewer'
 import NoteEditor from './components/NoteEditor';
+import {gql} from 'apollo-boost'
+import {useQuery, useMutation} from 'react-apollo'
+
+const GET_NOTES = gql`
+query getNotes{
+  notes{
+    id
+    title
+  }
+}
+`
 
 const items = [
   {
     id: 1,
     title: "Note 1",
-    content: `
-# Live demo
-
-Changes are automatically rendered as you type.
-
-## Table of Contents`
+    content: `# Live demo`
   },
   {
   id: 2,
   title: "Note 2",
-  content: `
-# Live demo
-
-Changes are automatically rendered as you type.
-
-## Table of Contents
-
-* Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
-* Renders actual, "native" React DOM elements
-* Allows you to escape or skip HTML (try toggling the checkboxes above)
-* If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
-
-## HTML block below
-
-<blockquote>
-  This blockquote will change based on the HTML settings above.
-</blockquote>
-
-## How about some code?
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-\`\`\`
-
-Pretty neat, eh?
-
-## Tables?
-
-| Feature   | Support |
-| --------- | ------- |
-| tables    | ✔ |
-| alignment | ✔ |
-| wewt      | ✔ |
-
-## More info?
-
-Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)
-
----------------
-
-A component by [Espen Hovlandsdal](https://espen.codes/)`
-  }
+  content: `# Live demo`}
 ];
 
 let id = 3;
 
 export default function App() {
-  const [notes, setNotes] = React.useState(items)
-  const [activeNote, setActiveNote] = React.useState(notes[0])
-  const [editable, setEditable] = React.useState(false)
 
+  
+  // State
+  const [notes, setNotes] = React.useState([])
+  const [activeNote, setActiveNote] = React.useState({title: '', content: ''})
+  const [editable, setEditable] = React.useState(true)
+  
+  // GraphQL
+  const query = useQuery(GET_NOTES)
+
+  // Mounting emulating network lag
+  React.useEffect(() => {
+    setTimeout(() => setNotes(items), 850)
+  }, [])
+
+  // Mutations
   function cancel() {
     const note = notes.find(note => note.id === activeNote.id)
     if(note) {
@@ -130,7 +102,8 @@ export default function App() {
     setActiveNote({title: '', content: ''})
     setEditable(true)
   }
-
+  
+  console.log(query)
   return (
     <div className="h-screen">
       <Header />
@@ -145,9 +118,9 @@ export default function App() {
         : <NoteEditor
             note={activeNote}
             onChangeTitle={changeTitle} 
-            onChangeContent={changeContent} 
-            onUpdateNote={updateNote}
+            onChangeContent={changeContent}
             onCancel={cancel}
+            onUpdateNote={updateNote}
           />
         }
       </div>

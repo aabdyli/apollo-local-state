@@ -1,6 +1,29 @@
 import React from 'react'
+import {useMutation} from '@apollo/react-hooks'
+import {gql} from 'apollo-boost'
+
+const ADD_NOTE = gql`
+  mutation addNote($note: Note!) {
+    addNote(note: $note) @client
+  }
+`;
+
+const GET_NOTES = gql`
+  query getNotes {
+    notes: getNotes @client {
+      id
+      title
+      content
+    }
+  }
+`
 
 export default function NoteEditor({note, onChangeTitle, onChangeContent, onUpdateNote, onCancel}) {
+  const [addNote] = useMutation(
+    ADD_NOTE,
+    {variables: {note}}
+  )
+
   return (
     <div className="w-4/5 bg-indigo-100 flex flex-col">
       <div className="flex-1 ">
