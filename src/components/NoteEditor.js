@@ -64,6 +64,10 @@ export default function NoteEditor() {
             query: GET_NOTES,
             data: { notes: notes.concat([createNote])}
           })
+          cache.writeQuery({
+            query: LOCAL_STATE_QUERY,
+            data: {activeNote: createNote}
+          })
         },
       })
     }
