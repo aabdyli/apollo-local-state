@@ -1,0 +1,18 @@
+# import * from './generated/prisma.graphql'
+
+type Note {
+    id: ID!
+    title: String!
+    content: String!
+}
+
+type Query {
+  notes(where: NoteWhereInput, orderBy: NoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Note]!
+  note(where: NoteWhereUniqueInput!): Note
+}
+
+type Mutation {
+    createNote(data: NoteCreateInput!): Note!
+    updateNote(data: NoteUpdateInput!, where: NoteWhereUniqueInput!): Note
+    deleteNote(where: NoteWhereUniqueInput!): Note
+}

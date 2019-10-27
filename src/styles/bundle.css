@@ -610,6 +610,138 @@ video {
   }
 }
 
+.markdown a {
+    text-decoration: underline;
+    color: #4299e1;
+  }
+
+.markdown a:hover {
+    color: #2b6cb0;
+  }
+
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+    font-weight: 600;
+  }
+
+.markdown h1 {
+    font-size: 1.5rem;
+  }
+
+.markdown h2 {
+    font-size: 1.25rem;
+  }
+
+.markdown h3 {
+    font-size: 1.125rem;
+  }
+
+.markdown h5 {
+    font-size: 0.875rem;
+  }
+
+.markdown h6 {
+    font-size: 0.75rem
+  }
+
+.markdown code {
+    border-radius: 0.5rem;
+    background-color: #2d3748;
+    color: #a0aec0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+.markdown pre {
+    border-radius: 0.5rem;
+    background-color: #2d3748;
+    color: #a0aec0;
+    padding: 0.75rem;
+    width: 60%;
+  }
+
+.markdown pre > code {
+    border-radius: 0;
+    padding: 0;
+    word-break: break-all;
+  }
+
+.markdown th, .markdown td {
+    border-width: 1px;
+    border-color: #2d3748;
+    padding: 0.5rem;
+  }
+
+.markdown ul {
+    list-style-position: inside;
+    list-style-type: disc;
+  }
+
+.markdown ol {
+    list-style-position: inside;
+    list-style-type: decimal;
+  }
+
+.markdown li > ul, .markdown li > ol {
+    padding-left: 1.5rem;
+    list-style-position: inside;
+  }
+
+.markdown hr{
+    border-width: 1px;
+    border-color: #718096;
+    margin-right: 1rem;
+  }
+
+.markdown > * {
+  margin-bottom: 0.5rem;
+}
+
+.btn {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #e2e8f0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.btn:hover, .btn:focus {
+  color: #1a202c;
+  background-color: #cbd5e0;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateX(-1px);
+}
+
+.btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.btn-success {
+  background-color: #2c7a7b;
+  color: #b2f5ea;
+}
+
+.btn-success:hover, .btn-success:focus {
+  color: #e6fffa;
+  background-color: #285e61;
+}
+
+.btn-danger {
+  background-color: #c53030;
+  color: #fed7d7;
+}
+
+.btn-danger:hover, .btn-danger:focus {
+  color: #fff5f5;
+  background-color: #9b2c2c;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

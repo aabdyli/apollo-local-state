@@ -2,4 +2,7 @@
 
 @import "tailwindcss/components";
 
+@import "./components/markdown.css";
+@import "./components/button.css";
+
 @import "tailwindcss/utilities";

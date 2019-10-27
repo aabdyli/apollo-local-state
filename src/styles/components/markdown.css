@@ -1,0 +1,68 @@
+.markdown {
+    a {
+        @apply underline text-blue-500;
+    }
+
+    a:hover {
+        @apply text-blue-700;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-semibold;
+    }
+
+    h1 {
+        @apply text-2xl;
+    }
+
+    h2 {
+        @apply text-xl;
+    }
+
+    h3 {
+        @apply text-lg;
+    }
+
+    h5 {
+        @apply text-sm;
+    }
+
+    h6 {
+        @apply text-xs
+    }
+    
+    code {
+        @apply rounded-lg bg-gray-800 text-gray-500 px-2 py-1 ;
+    }
+
+    pre {
+        @apply rounded-lg bg-gray-800 text-gray-500 p-3 w-3/5;
+    }
+    pre > code {
+        @apply rounded-none p-0 break-all;
+    }
+
+    th, td {
+        @apply border border-gray-800 p-2;
+    }
+    
+    ul {
+        @apply list-inside list-disc;
+    }
+
+    ol {
+        @apply list-inside list-decimal;
+    }
+
+    li > ul, li > ol {
+        @apply pl-6 list-inside;
+    }
+
+    hr{
+        @apply border border-gray-600 mr-4;
+    }
+}
+
+.markdown > * {
+    @apply mb-2;
+}

@@ -1,6 +1,6 @@
-endpoint: https://eu1.prisma.sh/albi-abdyli/react-gql/dev
+endpoint: ${env:PRISMA_ENDPOINT}
 datamodel: datamodel.graphql
-secret: ${env:PRISMA_SECRET}
+# secret: ${env:PRISMA_SECRET}
 hooks:
   post-deploy:
       - graphql get-schema -p prisma

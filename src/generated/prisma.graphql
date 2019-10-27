@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/albi-abdyli/react-gql/dev
-# timestamp: Fri Oct 25 2019 23:53:42 GMT+0200 (Central European Summer Time)
+# timestamp: Sun Oct 27 2019 22:09:35 GMT+0100 (Central European Standard Time)
 
 type AggregateNote {
   count: Int!
